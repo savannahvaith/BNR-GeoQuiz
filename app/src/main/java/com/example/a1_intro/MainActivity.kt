@@ -1,27 +1,30 @@
 package com.example.a1_intro
 
+import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a1_intro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
-import logcat.logcat
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val quizViewModel: QuizViewModel by viewModels()
-
+    private val cheatLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        // handle result
+        if(result.resultCode == Activity.RESULT_OK) {
+            quizViewModel.isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        logcat { "Got a QuizViewModel: $quizViewModel - logcat" }
-//        Log.d("MainActivity", "Got a QuizViewModel: $quizViewModel")
 
         binding.questionTextView.setOnClickListener{
            quizViewModel.moveToNext()
@@ -41,6 +44,14 @@ class MainActivity : AppCompatActivity() {
             updateQuestion()
         }
 
+        binding.cheatButton.setOnClickListener {
+            val answerIsTrue = quizViewModel.currentQuestionAnswer
+            val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+            cheatLauncher.launch(intent)
+
+        }
+
+
         updateQuestion()
 
     }
@@ -53,7 +64,12 @@ class MainActivity : AppCompatActivity() {
     private fun checkAnswer(userAnswer: Boolean, view: View){
         val correctAnswer = quizViewModel.currentQuestionAnswer
 
-        val messageResId = if(userAnswer == correctAnswer) R.string.correct_toast else R.string.incorrect_toast
+        val messageResId = when {
+            quizViewModel.isCheater -> R.string.judgement_toast
+            userAnswer == correctAnswer -> R.string.correct_toast
+            else -> R.string.incorrect_toast
+        }
+
         Snackbar.make(view, messageResId, Snackbar.LENGTH_SHORT).show()
     }
 }
