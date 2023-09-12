@@ -1,4 +1,4 @@
-package com.example.a1_intro
+package com.example.geoquiz
 
 import org.junit.Test
 

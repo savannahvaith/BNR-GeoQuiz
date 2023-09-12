@@ -1,7 +1,8 @@
-package com.example.a1_intro
+package com.example.geoquiz
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.example.geoquiz.R.string
 
 
 private const val TAG:String ="QuizViewModel"
@@ -10,12 +11,12 @@ const val IS_CHEATER_KEY = "IS_CHEATER_KEY"
 class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(){
 
     private val questionBank = listOf<Question>(
-        Question(R.string.question_australia, true),
-        Question(R.string.question_oceans, true),
-        Question(R.string.question_mideast, false),
-        Question(R.string.question_africa, false),
-        Question(R.string.question_americas, true),
-        Question(R.string.question_asia, true)
+        Question(string.question_australia, true),
+        Question(string.question_oceans, true),
+        Question(string.question_mideast, false),
+        Question(string.question_africa, false),
+        Question(string.question_americas, true),
+        Question(string.question_asia, true)
     )
 
     var isCheater: Boolean

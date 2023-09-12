@@ -1,4 +1,4 @@
-package com.example.a1_intro
+package com.example.geoquiz
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,7 +6,9 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.a1_intro.databinding.ActivityMainBinding
+import com.example.geoquiz.R.string
+import com.example.geoquiz.databinding.ActivityMainBinding
+import com.example.geoquiz.CheatActivity.Companion
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -65,9 +67,9 @@ class MainActivity : AppCompatActivity() {
         val correctAnswer = quizViewModel.currentQuestionAnswer
 
         val messageResId = when {
-            quizViewModel.isCheater -> R.string.judgement_toast
-            userAnswer == correctAnswer -> R.string.correct_toast
-            else -> R.string.incorrect_toast
+            quizViewModel.isCheater -> string.judgement_toast
+            userAnswer == correctAnswer -> string.correct_toast
+            else -> string.incorrect_toast
         }
 
         Snackbar.make(view, messageResId, Snackbar.LENGTH_SHORT).show()

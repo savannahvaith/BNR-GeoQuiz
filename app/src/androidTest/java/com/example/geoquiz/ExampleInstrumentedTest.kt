@@ -1,4 +1,4 @@
-package com.example.a1_intro
+package com.example.geoquiz
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

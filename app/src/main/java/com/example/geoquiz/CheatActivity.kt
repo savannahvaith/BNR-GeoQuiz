@@ -1,15 +1,15 @@
-package com.example.a1_intro
+package com.example.geoquiz
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.a1_intro.databinding.ActivityCheatBinding
-import java.security.AccessControlContext
+import androidx.appcompat.app.AppCompatActivity
+import com.example.geoquiz.R.string
+import com.example.geoquiz.databinding.ActivityCheatBinding
 
-private const val EXTRA_ANSWER_IS_TRUE = "com.example.a1_intro.answer_is_true"
-const val EXTRA_ANSWER_SHOWN = "com.example.a1_intro.answer_shown"
+private const val EXTRA_ANSWER_IS_TRUE = "com.example.geoquiz.answer_is_true"
+const val EXTRA_ANSWER_SHOWN = "com.example.geoquiz.answer_shown"
 class CheatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCheatBinding
     private var answerIsTrue = false
@@ -21,8 +21,8 @@ class CheatActivity : AppCompatActivity() {
 
         binding.showAnswerButton.setOnClickListener {
             val answerText = when {
-                answerIsTrue -> R.string.true_button
-                else -> R.string.false_button
+                answerIsTrue -> string.true_button
+                else -> string.false_button
             }
             binding.answerTextView.setText(answerText)
             setAnswerShownResult(true)
